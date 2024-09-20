@@ -7,7 +7,9 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+const connectdb_1 = __importDefault(require("./db/connectdb"));
+const user_controller_1 = require("./controllers/user.controller");
+dotenv_1.default.config({});
 //create an app using express
 const app = (0, express_1.default)();
 // get port and mongodb url from .env file using dotenv
@@ -26,6 +28,9 @@ app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 //cookie-parser
 app.use((0, cookie_parser_1.default)());
+//load api route'
+app.use("/", user_controller_1.register);
 app.listen(PORT, () => {
     console.log(`server running at port ${PORT}`);
+    (0, connectdb_1.default)();
 });
